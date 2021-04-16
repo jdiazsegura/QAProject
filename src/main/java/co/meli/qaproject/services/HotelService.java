@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface HotelService {
     List<HotelDTO> getAll();
+
+    List<HotelDTO> getAllByDateAndCity(String dateTo, String dateFor, String city);
 }

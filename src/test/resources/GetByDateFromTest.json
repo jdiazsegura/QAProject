@@ -1,0 +1,22 @@
+[
+    {
+        "codeHotel": "CH-0002",
+        "name": "Cataratas Hotel",
+        "city": "Puerto Iguazú",
+        "roomType": "Doble",
+        "nightPrice": 6300,
+        "dateTo": "10/02/2021",
+        "dateFrom": "20/03/2021",
+        "reserved": false
+      },
+      {
+        "codeHotel": "CP-0002",
+        "name": "Central Plaza 2",
+        "city": "Medellín",
+        "roomType": "Doble",
+        "nightPrice": 6400,
+        "dateTo": "10/02/2021",
+        "dateFrom": "20/03/2021",
+        "reserved": false
+      }
+]

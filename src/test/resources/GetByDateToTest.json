@@ -1,0 +1,42 @@
+[
+    {
+        "codeHotel": "CH-0002",
+        "name": "Cataratas Hotel",
+        "city": "Puerto Iguazú",
+        "roomType": "Doble",
+        "nightPrice": 6300,
+        "dateTo": "10/02/2021",
+        "dateFrom": "20/03/2021",
+        "reserved": false
+      },
+      {
+        "codeHotel": "CH-0003",
+        "name": "Cataratas Hotel 2",
+        "city": "Puerto Iguazú",
+        "roomType": "Triple",
+        "nightPrice": 8200,
+        "dateTo": "10/02/2021",
+        "dateFrom": "23/03/2021",
+        "reserved": false
+      },
+      {
+        "codeHotel": "HB-0001",
+        "name": "Hotel Bristol",
+        "city": "Buenos Aires",
+        "roomType": "Single",
+        "nightPrice": 5435,
+        "dateTo": "10/02/2021",
+        "dateFrom": "19/03/2021",
+        "reserved": false
+      },
+      {
+        "codeHotel": "CP-0002",
+        "name": "Central Plaza 2",
+        "city": "Medellín",
+        "roomType": "Doble",
+        "nightPrice": 6400,
+        "dateTo": "10/02/2021",
+        "dateFrom": "20/03/2021",
+        "reserved": false
+      }
+]

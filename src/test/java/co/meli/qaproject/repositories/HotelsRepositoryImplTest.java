@@ -1,6 +1,7 @@
 package co.meli.qaproject.repositories;
 
 import co.meli.qaproject.dto.HotelDTO;
+import co.meli.qaproject.utils.DateUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -18,6 +21,7 @@ class HotelsRepositoryImplTest {
 
     private HotelsRepository hotelsRepository;
     private ObjectMapper objectMapper = new ObjectMapper();
+    private DateUtils dateUtils = new DateUtils();
 
     @BeforeEach
     void setUp() {
@@ -53,5 +57,111 @@ class HotelsRepositoryImplTest {
 
         Assertions.assertNotNull(listForTest);
         Assertions.assertEquals(listForTest, hotelsRepository.getAll());
+    }
+
+    @Test
+    void getHotelByName() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByNameTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+
+        var HotelFromDb = hotelsRepository.getHotelByName(hotelsRepository.getAll(),"Hotel Bristol");
+        Assertions.assertEquals(listForTest.get(0),HotelFromDb);
+    }
+
+    @Test
+    void getHotelsByCity() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByCityTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+
+        var HotelsFromDb = hotelsRepository.getHotelsByCity(hotelsRepository.getAll(),"Bogotá");
+        Assertions.assertEquals(listForTest,HotelsFromDb);
+    }
+
+    @Test
+    void getHotelsByRoomType() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByRoomTypeTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+
+        var HotelsFromDb = hotelsRepository.getHotelsByRoomType(hotelsRepository.getAll(),"Doble");
+        Assertions.assertEquals(listForTest,HotelsFromDb);
+    }
+
+    @Test
+    void getHotelsByPrice() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByPriceTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+
+        var HotelFromDb = hotelsRepository.getHotelsByPrice(hotelsRepository.getAll(),6400);
+        Assertions.assertEquals(listForTest,HotelFromDb);
+    }
+
+    @Test
+    void getHotelByReserved() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByReservedTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+
+        var HotelFromDb = hotelsRepository.getHotelByReserved(hotelsRepository.getAll(),false);
+        Assertions.assertEquals(listForTest,HotelFromDb);
+    }
+
+    @Test
+    void getHotelByDateTo() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByDateToTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+        String dateForTest = "10/02/2021";
+        var HotelFromDb = hotelsRepository.getHotelByDateTo(hotelsRepository.getAll(),dateForTest);
+
+        Assertions.assertEquals(listForTest,HotelFromDb);
+    }
+
+    @Test
+    void getHotelByDateFrom() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByDateFromTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+        String dateForTest = "20/03/2021";
+        var HotelFromDb = hotelsRepository.getHotelByDateFrom(hotelsRepository.getAll(),dateForTest);
+
+        Assertions.assertEquals(listForTest,HotelFromDb);
+    }
+
+    @Test
+    void getHotelByDate() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByDateTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+        String dateToForTest = "09/02/2021";
+        String dateFromForTest = "21/03/2021";
+        var HotelFromDb = hotelsRepository.getHotelByDate(hotelsRepository.getAll(),dateToForTest,dateFromForTest);
+
+        Assertions.assertEquals(listForTest,HotelFromDb);
+    }
+
+    @Test
+    void getHotelByDateAndCity() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByDateAndCity.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+        String dateToForTest = "09/02/2021";
+        String dateFromForTest = "21/03/2021";
+        var HotelFromDb = hotelsRepository.
+                getHotelByDateAndCity(hotelsRepository.getAll(),dateToForTest,dateFromForTest,"Buenos Aires");
+
+        Assertions.assertEquals(listForTest,HotelFromDb);
     }
 }

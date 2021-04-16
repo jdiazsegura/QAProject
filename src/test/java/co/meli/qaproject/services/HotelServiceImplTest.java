@@ -20,31 +20,48 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class HotelServiceTest {
+class HotelServiceImplTest {
 
     private HotelsRepository hotelsRepository = mock(HotelsRepository.class);
 
     @InjectMocks
     private HotelService hotelService;
+    private List<HotelDTO> testList;
 
     private ObjectMapper objectMapper = new ObjectMapper();
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         hotelService = new HotelServiceImpl(hotelsRepository);
-    }
-
-    @Test
-    void getAll() throws IOException {
-        List<HotelDTO> testList = objectMapper.readValue(
+        testList = objectMapper.readValue(
                 new File("src/test/resources/dbHotels.json"),
                 new TypeReference<>() {
                 }
         );
+    }
+
+    @Test
+    void getAll() throws IOException {
+
         when(hotelsRepository.getAll()).thenReturn(testList);
 
         Assertions.assertNotNull(hotelService.getAll());
+    }
+
+    @Test
+    void getAllByDateAndCity() throws IOException {
+        List<HotelDTO> listExpected = objectMapper.readValue(
+                new File("src/test/resources/GetByDateAndCity.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+        //when(hotelsRepository.getAll()).thenReturn(testList);
+        when(hotelsRepository.getHotelByDateAndCity(any(),any(),any(),any())).thenReturn(listExpected);
+        String dateToForTest = "09/02/2021";
+        String dateFromForTest = "21/03/2021";
+        var HotelForTest = hotelService.getAllByDateAndCity(dateToForTest,dateFromForTest,"Buenos Aires");
+        Assertions.assertEquals(listExpected,HotelForTest);
     }
 }
