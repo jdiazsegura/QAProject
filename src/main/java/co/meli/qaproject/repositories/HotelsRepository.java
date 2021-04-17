@@ -12,6 +12,8 @@ public interface HotelsRepository {
 
     List<HotelDTO> getAll();
 
+    HotelDTO getHotelByCode(List<HotelDTO> list, String code);
+
     HotelDTO getHotelByName(List<HotelDTO> list, String name);
 
     List<HotelDTO> getHotelsByCity(List<HotelDTO> list, String city);

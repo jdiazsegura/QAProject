@@ -64,4 +64,34 @@ class HotelServiceImplTest {
         var HotelForTest = hotelService.getAllByDateAndCity(dateToForTest,dateFromForTest,"Buenos Aires");
         Assertions.assertEquals(listExpected,HotelForTest);
     }
+
+    @Test
+    void calculateNights() {
+        var testFlag = hotelService.calculateNights("10/11/2021","20/11/2021");
+
+        assertEquals(10,testFlag);
+    }
+
+    @Test
+    void priceByNights() {
+        var testFLag = hotelService.priceByNights(10,6300.00);
+        assertEquals(63000,testFLag);
+    }
+
+    @Test
+    void valueOfInterest() {
+        var testFlag = hotelService.valueOfInterest("CREDIT",2);
+        var testFlag2 = hotelService.valueOfInterest("DEBIT",1);
+        var testFlag3 = hotelService.valueOfInterest("CREDIT",5);
+        assertEquals(0.05,testFlag);
+        assertEquals(0,testFlag2);
+        assertEquals(0.10,testFlag3);
+
+    }
+
+    @Test
+    void getTotalValue() {
+        var testFlag = hotelService.getTotalValue(63000.0,0.05);
+        assertEquals(66150,testFlag);
+    }
 }

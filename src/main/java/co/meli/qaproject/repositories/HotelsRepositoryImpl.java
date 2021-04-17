@@ -54,6 +54,13 @@ public class HotelsRepositoryImpl implements HotelsRepository{
     }
 
     @Override
+    public HotelDTO getHotelByCode(List<HotelDTO>list,String code){
+        return list.stream()
+                .filter(hotelDTO -> hotelDTO.getCodeHotel()
+                .equals(code))
+                .findFirst().get();
+    }
+    @Override
     public HotelDTO getHotelByName(List<HotelDTO> list, String name){
         return list.stream()
             .filter(hotelDTO -> hotelDTO.getName().equals(name))
@@ -119,7 +126,7 @@ public class HotelsRepositoryImpl implements HotelsRepository{
     }
 
     @Override
-    public List<HotelDTO> getHotelByDateAndCity(List<HotelDTO> list,String dateTo, String dateFrom,String city){
+    public List<HotelDTO> getHotelByDateAndCity(List<HotelDTO> list, String dateTo, String dateFrom, String city){
         var dateToF = dateUtils.normaliceDate(dateTo);
         var dateFromF = dateUtils.normaliceDate(dateFrom);
         return list.stream()
