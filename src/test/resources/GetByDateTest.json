@@ -5,8 +5,8 @@
         "city": "Puerto Iguazú",
         "roomType": "Doble",
         "nightPrice": 6300,
-        "dateTo": "10/02/2021",
-        "dateFrom": "20/03/2021",
+        "dateFrom": "10/02/2021",
+        "dateTo": "20/03/2021",
         "reserved": false
       },
       {
@@ -15,8 +15,8 @@
         "city": "Buenos Aires",
         "roomType": "Single",
         "nightPrice": 5435,
-        "dateTo": "10/02/2021",
-        "dateFrom": "19/03/2021",
+        "dateFrom": "10/02/2021",
+        "dateTo": "19/03/2021",
         "reserved": false
       },
       {
@@ -25,8 +25,8 @@
         "city": "Medellín",
         "roomType": "Doble",
         "nightPrice": 6400,
-        "dateTo": "10/02/2021",
-        "dateFrom": "20/03/2021",
+        "dateFrom": "10/02/2021",
+        "dateTo": "20/03/2021",
         "reserved": false
       }
       

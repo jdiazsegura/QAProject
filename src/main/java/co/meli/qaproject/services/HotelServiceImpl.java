@@ -22,7 +22,7 @@ public class HotelServiceImpl implements HotelService{
 
     @Override
     public List<HotelDTO> getAll(){
-        return hotelsRepository.getAll();
+        return hotelsRepository.getAll().stream().filter(hotelDTO ->!hotelDTO.getReserved()).collect(Collectors.toList());
     }
 
     @Override
@@ -42,15 +42,16 @@ public class HotelServiceImpl implements HotelService{
         payloadResult.setAmount(priceByNights(nights, Double.valueOf(hotel.getNightPrice())));
         payloadResult.setInterest(valueOfInterest(booking.getPaymentMethod().getType(),booking.getPaymentMethod().getDues())*10);
         payloadResult.setTotal(getTotalValue(payloadResult.getAmount(), payloadResult.getInterest()/10));
+        payloadResult.setStatusCode(new StatusCodeDTO(200,"Successfully Booked"));
+        hotelsRepository.changeStatusForHotel(hotelsRepository.getAll(),hotel.getCodeHotel(),true);
         return payloadResult;
     }
 
     @Override
-    public Integer calculateNights(String DateTo, String DateFrom){
+    public Integer calculateNights(String DateFrom, String DateTo){
         LocalDate DateToFinal = dateUtils.normaliceDate(DateTo);
         LocalDate DateFromFinal = dateUtils.normaliceDate(DateFrom);
-        // TODO Arreglar el JSON
-        return Math.toIntExact(DateToFinal.until(DateFromFinal, ChronoUnit.DAYS)) ;
+        return Math.toIntExact(DateFromFinal.until(DateToFinal, ChronoUnit.DAYS)) ;
     }
 
     @Override
@@ -77,4 +78,6 @@ public class HotelServiceImpl implements HotelService{
     public Double getTotalValue(Double priceByNights, Double valueOfInterest){
         return priceByNights+(priceByNights*valueOfInterest);
     }
+
+
 }

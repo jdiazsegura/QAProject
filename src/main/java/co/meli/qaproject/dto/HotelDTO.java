@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +13,7 @@ public class HotelDTO {
     String city;
     String roomType;
     Integer nightPrice;
-    String dateTo;
     String dateFrom;
+    String dateTo;
     Boolean reserved;
 }

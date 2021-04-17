@@ -7,7 +7,7 @@
     "nightPrice": 6300,
     "dateFrom": "10/02/2021",
     "dateTo": "20/03/2021",
-    "reserved": false
+    "reserved": true
   },
   {
     "codeHotel": "CH-0003",

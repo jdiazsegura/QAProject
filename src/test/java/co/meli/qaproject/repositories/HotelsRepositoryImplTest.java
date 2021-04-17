@@ -60,6 +60,17 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    void getHotelByCode() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/GetByHotelCodeTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+        var HotelFromDb = hotelsRepository.getHotelByCode(hotelsRepository.getAll(),"CH-0002");
+
+        Assertions.assertEquals(listForTest.get(0),HotelFromDb);
+    }
+
+    @Test
     void getHotelByName() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByNameTest.json"),
@@ -120,7 +131,7 @@ class HotelsRepositoryImplTest {
                 new File("src/test/resources/GetByDateToTest.json"),
                 new TypeReference<List<HotelDTO>>() {
                 });
-        String dateForTest = "10/02/2021";
+        String dateForTest = "20/03/2021";
         var HotelFromDb = hotelsRepository.getHotelByDateTo(hotelsRepository.getAll(),dateForTest);
 
         Assertions.assertEquals(listForTest,HotelFromDb);
@@ -132,7 +143,7 @@ class HotelsRepositoryImplTest {
                 new File("src/test/resources/GetByDateFromTest.json"),
                 new TypeReference<List<HotelDTO>>() {
                 });
-        String dateForTest = "20/03/2021";
+        String dateForTest = "10/02/2021";
         var HotelFromDb = hotelsRepository.getHotelByDateFrom(hotelsRepository.getAll(),dateForTest);
 
         Assertions.assertEquals(listForTest,HotelFromDb);
@@ -144,9 +155,9 @@ class HotelsRepositoryImplTest {
                 new File("src/test/resources/GetByDateTest.json"),
                 new TypeReference<List<HotelDTO>>() {
                 });
-        String dateToForTest = "09/02/2021";
-        String dateFromForTest = "21/03/2021";
-        var HotelFromDb = hotelsRepository.getHotelByDate(hotelsRepository.getAll(),dateToForTest,dateFromForTest);
+        String dateFromForTest = "09/02/2021";
+        String dateToForTest = "21/03/2021";
+        var HotelFromDb = hotelsRepository.getHotelByDate(hotelsRepository.getAll(),dateFromForTest,dateToForTest);
 
         Assertions.assertEquals(listForTest,HotelFromDb);
     }
@@ -157,11 +168,27 @@ class HotelsRepositoryImplTest {
                 new File("src/test/resources/GetByDateAndCity.json"),
                 new TypeReference<List<HotelDTO>>() {
                 });
-        String dateToForTest = "09/02/2021";
-        String dateFromForTest = "21/03/2021";
+        String dateFromForTest = "09/02/2021";
+        String dateToForTest = "21/03/2021";
+
         var HotelFromDb = hotelsRepository.
-                getHotelByDateAndCity(hotelsRepository.getAll(),dateToForTest,dateFromForTest,"Buenos Aires");
+                getHotelByDateAndCity(hotelsRepository.getAll(),dateFromForTest,dateToForTest,"Buenos Aires");
 
         Assertions.assertEquals(listForTest,HotelFromDb);
+    }
+
+    @Test
+    void changeStatusForHotel() throws IOException {
+        List<HotelDTO> listForTest = objectMapper.readValue(
+                new File("src/test/resources/ChangeStatusTest.json"),
+                new TypeReference<List<HotelDTO>>() {
+                });
+
+        var listChangeTest = hotelsRepository.getAll();
+        String hotelCodeTest = "CH-0002";
+        hotelsRepository.changeStatusForHotel(listChangeTest,hotelCodeTest,true);
+        Assertions.assertEquals(listForTest,listChangeTest);
+        hotelsRepository.changeStatusForHotel(listChangeTest,hotelCodeTest,false);
+
     }
 }

@@ -1,29 +1,31 @@
 package co.meli.qaproject.controllers;
 
-import co.meli.qaproject.dto.HotelDTO;
-import co.meli.qaproject.dto.PayloadHotelBookDTO;
-import co.meli.qaproject.dto.ResponseHotelBookDTO;
-import co.meli.qaproject.dto.StatusCodeDTO;
+import co.meli.qaproject.dto.*;
 import co.meli.qaproject.exceptions.IncorrectFormatException;
 import co.meli.qaproject.exceptions.NoValidDatesException;
+import co.meli.qaproject.services.FlightsService;
 import co.meli.qaproject.services.HotelService;
 import co.meli.qaproject.utils.Validations;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/")
-public class HotelController {
+public class MainController implements IMainController {
 
     @Autowired
     private HotelService hotelService;
+    @Autowired
+    private FlightsService flightsService;
+
     private Validations validations = new Validations();
 
+    @Override
     @GetMapping("/hotels")
     public ResponseEntity<List<HotelDTO>> get(@RequestParam(required = false) String dateTo,@RequestParam(required = false) String dateFor,@RequestParam(required = false) String destination) throws IncorrectFormatException, NoValidDatesException {
         if (dateTo == null && dateFor == null && destination == null){
@@ -33,10 +35,24 @@ public class HotelController {
         }
     }
 
+    @Override
     @PostMapping("/booking")
     public ResponseEntity<ResponseHotelBookDTO> bookingHotel(@RequestBody PayloadHotelBookDTO payloadHotelBook){
         return new ResponseEntity<>(hotelService.bookHotel(payloadHotelBook), HttpStatus.OK);
     }
+
+    // FLIGHTS ENDPOINTS
+
+    @GetMapping("/flights")
+    public ResponseEntity<List<FlightDTO>> get(@RequestParam HashMap<String,String> allParams){
+        if (allParams.isEmpty()){
+            return new ResponseEntity<>(flightsService.getAll(),HttpStatus.OK);
+        }else{
+            return null;
+        }
+    }
+
+
 
 
     // EXCEPTION HANDLERS

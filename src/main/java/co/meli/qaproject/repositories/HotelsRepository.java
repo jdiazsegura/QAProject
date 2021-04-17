@@ -10,6 +10,8 @@ public interface HotelsRepository {
 
     List<HotelDTO> loadDatabase() throws FileNotFoundException;
 
+    void saveDatabase(List<HotelDTO> list);
+
     List<HotelDTO> getAll();
 
     HotelDTO getHotelByCode(List<HotelDTO> list, String code);
@@ -31,4 +33,6 @@ public interface HotelsRepository {
     List<HotelDTO> getHotelByDate(List<HotelDTO> list, String dateTo, String dateFrom);
 
     List<HotelDTO> getHotelByDateAndCity(List<HotelDTO> list, String dateTo, String dateFrom, String city);
+
+    void changeStatusForHotel(List<HotelDTO> list, String hotelId, Boolean status);
 }

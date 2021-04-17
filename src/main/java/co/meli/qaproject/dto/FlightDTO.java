@@ -13,7 +13,8 @@ public class FlightDTO {
     String flightNumber;
     String origin;
     String destination;
+    String seatType;
     Integer price;
-    Date dateFrom;
-    Date dateTo;
+    String dateFrom;
+    String dateTo;
 }

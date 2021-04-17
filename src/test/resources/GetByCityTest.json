@@ -5,8 +5,8 @@
     "city": "Bogotá",
     "roomType": "Single",
     "nightPrice": 3900,
-    "dateTo": "23/01/2021",
-    "dateFrom": "23/11/2021",
+    "dateFrom": "23/01/2021",
+    "dateTo": "23/11/2021",
     "reserved": false
   },
   {
@@ -15,8 +15,8 @@
     "city": "Bogotá",
     "roomType": "Doble",
     "nightPrice": 5840,
-    "dateTo": "23/01/2021",
-    "dateFrom": "15/10/2021",
+    "dateFrom": "23/01/2021",
+    "dateTo": "15/10/2021",
     "reserved": false
   },
   {
@@ -25,8 +25,8 @@
     "city": "Bogotá",
     "roomType": "Triple",
     "nightPrice": 7020,
-    "dateTo": "15/02/2021",
-    "dateFrom": "27/03/2021",
+    "dateFrom": "15/02/2021",
+    "dateTo": "27/03/2021",
     "reserved": false
   }
 ]
