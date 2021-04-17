@@ -3,11 +3,13 @@ package co.meli.qaproject.services;
 import co.meli.qaproject.dto.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HotelService {
     List<HotelDTO> getAll();
 
-    List<HotelDTO> getAllByDateAndCity(String dateTo, String dateFor, String city);
+
+    List<HotelDTO> getAllByDateAndCity(Map<String, String> allParams);
 
     ResponseHotelBookDTO bookHotel(PayloadHotelBookDTO payloadHotelBook);
 

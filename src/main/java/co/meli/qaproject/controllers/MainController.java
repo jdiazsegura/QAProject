@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/")
@@ -27,11 +28,11 @@ public class MainController implements IMainController {
 
     @Override
     @GetMapping("/hotels")
-    public ResponseEntity<List<HotelDTO>> get(@RequestParam(required = false) String dateTo,@RequestParam(required = false) String dateFor,@RequestParam(required = false) String destination) throws IncorrectFormatException, NoValidDatesException {
-        if (dateTo == null && dateFor == null && destination == null){
+    public ResponseEntity<List<HotelDTO>> getHotels(@RequestParam Map<String,String> allParams) throws IncorrectFormatException, NoValidDatesException {
+        if (allParams.isEmpty()){
             return new ResponseEntity<>(hotelService.getAll(), HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(hotelService.getAllByDateAndCity(dateTo, dateFor, destination), HttpStatus.OK);
+            return new ResponseEntity<>(hotelService.getAllByDateAndCity(allParams), HttpStatus.OK);
         }
     }
 
@@ -43,12 +44,13 @@ public class MainController implements IMainController {
 
     // FLIGHTS ENDPOINTS
 
+    @Override
     @GetMapping("/flights")
-    public ResponseEntity<List<FlightDTO>> get(@RequestParam HashMap<String,String> allParams){
+    public ResponseEntity<List<FlightDTO>> getFlights(@RequestParam Map<String,String> allParams){
         if (allParams.isEmpty()){
             return new ResponseEntity<>(flightsService.getAll(),HttpStatus.OK);
         }else{
-            return null;
+            return new ResponseEntity<>(flightsService.getAvailableFlights(allParams),HttpStatus.OK);
         }
     }
 

@@ -17,7 +17,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -59,9 +61,14 @@ class HotelServiceImplTest {
                 });
         //when(hotelsRepository.getAll()).thenReturn(testList);
         when(hotelsRepository.getHotelByDateAndCity(any(),any(),any(),any())).thenReturn(listExpected);
-        String dateToForTest = "09/02/2021";
-        String dateFromForTest = "21/03/2021";
-        var HotelForTest = hotelService.getAllByDateAndCity(dateToForTest,dateFromForTest,"Buenos Aires");
+        String dateTo = "09/02/2021";
+        String dateFrom = "21/03/2021";
+        String city = "Buenos Aires";
+        Map<String,String> mapForTest = new HashMap<>();
+        mapForTest.put("dateTo",dateTo);
+        mapForTest.put("dateFrom",dateFrom);
+        mapForTest.put("city",city);
+        var HotelForTest = hotelService.getAllByDateAndCity(mapForTest);
         Assertions.assertEquals(listExpected,HotelForTest);
     }
 

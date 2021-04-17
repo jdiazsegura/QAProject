@@ -18,28 +18,39 @@ class FlightsRepositoryImplTest {
     private FlightsRepository flightsRepository;
     private ObjectMapper objectMapper = new ObjectMapper();
     private DateUtils dateUtils = new DateUtils();
+    List<FlightDTO> listForTest;
 
     @BeforeEach
-    void setUp(){
-        flightsRepository = new FlightsRepositoryImpl("src/test/resources/FlightsTests/dbFlights.json");
-    }
-    @Test
-    void loadDatabase() throws IOException {
-        List<FlightDTO> listForTest = objectMapper.readValue(
+    void setUp() throws IOException {
+        listForTest = objectMapper.readValue(
                 new File("src/test/resources/FlightsTests/dbFlights.json"),
                 new TypeReference<List<FlightDTO>>() {
                 });
+        flightsRepository = new FlightsRepositoryImpl("src/test/resources/FlightsTests/dbFlights.json");
+    }
+
+    @Test
+    void loadDatabase() throws IOException {
+
         Assertions.assertNotNull(listForTest);
         Assertions.assertEquals(listForTest,flightsRepository.loadDatabase());
     }
 
     @Test
     void getAll() throws IOException {
-        List<FlightDTO> listForTest = objectMapper.readValue(
-                new File("src/test/resources/FlightsTests/dbFlights.json"),
-                new TypeReference<List<FlightDTO>>() {
-                });
+
         Assertions.assertNotNull(listForTest);
         Assertions.assertEquals(listForTest,flightsRepository.getAll());
+    }
+
+    @Test
+    void getFlightByFilters() throws IOException {
+        List<FlightDTO> listOfTest = objectMapper.readValue(
+                new File("src/test/resources/FlightsTests/GetByFiltersTest.json"),
+                new TypeReference<List<FlightDTO>>() {
+                });
+        var testing = flightsRepository.getFlightByFilters(listForTest,"22/01/2021","01/02/2021","Cartagena","Medellín");
+
+        Assertions.assertEquals(listOfTest,testing);
     }
 }

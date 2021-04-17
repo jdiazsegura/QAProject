@@ -10,4 +10,7 @@ public interface FlightsRepository {
     List<FlightDTO> loadDatabase();
 
     List<FlightDTO> getAll();
+
+
+    List<FlightDTO> getFlightByFilters(List<FlightDTO> flights, String dateFrom, String dateTo, String origin, String destination);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,11 +27,17 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
-    public List<HotelDTO> getAllByDateAndCity(String dateTo, String dateFor, String city){
-        var result = hotelsRepository.getHotelByDateAndCity(hotelsRepository.getAll(),dateTo,dateFor,city);
+    public List<HotelDTO> getAllByDateAndCity(Map<String,String> allParams){
+        var normalization = normHotel(allParams);
+        var result = hotelsRepository.getHotelByDateAndCity(
+                hotelsRepository.getAll(),normalization.getDateFrom(), normalization.getDateTo(), normalization.getCity());
         return result.stream()
                 .filter(hotelDTO -> !hotelDTO.getReserved())
                 .collect(Collectors.toList());
+    }
+
+    public HotelNormDTO normHotel(Map<String,String> allParams){
+        return new HotelNormDTO(allParams.get("dateFrom"),allParams.get("dateTo"),allParams.get("destination"));
     }
 
     @Override

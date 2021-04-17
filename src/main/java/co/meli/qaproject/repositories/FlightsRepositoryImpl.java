@@ -12,6 +12,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class FlightsRepositoryImpl implements FlightsRepository {
@@ -40,5 +41,17 @@ public class FlightsRepositoryImpl implements FlightsRepository {
     @Override
     public List<FlightDTO> getAll(){
         return loadDatabase();
+    }
+
+    @Override
+    public List<FlightDTO> getFlightByFilters(List<FlightDTO> flights, String dateFrom, String dateTo, String origin, String destination) {
+        var dateFromF = dateUtils.normaliceDate(dateFrom);
+        var dateToF = dateUtils.normaliceDate(dateTo);
+        return flights.stream()
+                .filter(flightDTO -> dateUtils.normaliceDate(flightDTO.getDateFrom()).isAfter(dateFromF))
+                .filter(flightDTO -> dateUtils.normaliceDate(flightDTO.getDateTo()).isBefore(dateToF))
+                .filter(flightDTO -> flightDTO.getOrigin().equals(origin))
+                .filter(flightDTO -> flightDTO.getDestination().equals(destination))
+                .collect(Collectors.toList());
     }
 }
