@@ -21,16 +21,16 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/")
-public class MainController implements IMainController {
+public class MainController {
 
     @Autowired
     private HotelService hotelService;
     @Autowired
     private FlightsService flightsService;
 
-    //private Validations validations = new Validations();
+    //Miss documentation & fixing POST Methods tests
 
-    @Override
+
     @GetMapping("/hotels")
     public ResponseEntity<List<HotelDTO>> getHotels(@RequestParam Map<String,String> allParams) throws IncorrectFormatException, NoValidDatesException {
         if (allParams.isEmpty()){
@@ -40,7 +40,7 @@ public class MainController implements IMainController {
         }
     }
 
-    @Override
+
     @PostMapping("/booking")
     public ResponseEntity<ResponseHotelBookDTO> bookingHotel(@RequestBody PayloadHotelBookingDTO payloadHotelBook) throws ApiException {
         return new ResponseEntity<>(hotelService.bookHotel(payloadHotelBook), HttpStatus.OK);
@@ -48,7 +48,6 @@ public class MainController implements IMainController {
 
     // FLIGHTS ENDPOINTS
 
-    @Override
     @GetMapping("/flights")
     public ResponseEntity<List<FlightDTO>> getFlights(@RequestParam Map<String,String> allParams){
         if (allParams.isEmpty()){
@@ -58,7 +57,6 @@ public class MainController implements IMainController {
         }
     }
 
-    @Override
     @PostMapping("/flight-reservation")
     public ResponseEntity<ResponseFlightReservDTO> reserveFlight(@RequestBody co.meli.qaproject.dto.flights.PayloadFlightReservDTO payloadFlightReserv){
         return new ResponseEntity<>(flightsService.reserveFlight(payloadFlightReserv),HttpStatus.OK);
