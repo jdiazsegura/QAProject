@@ -1,19 +1,14 @@
 package co.meli.qaproject.repositories;
 
-import co.meli.qaproject.dto.HotelDTO;
+import co.meli.qaproject.dto.hotels.HotelDTO;
 import co.meli.qaproject.utils.DateUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -30,6 +25,7 @@ class HotelsRepositoryImplTest {
 
 
     @Test
+    @DisplayName("LoadDb Test")
     void loadDatabase() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/main/resources/dbHotels.json"),
@@ -41,6 +37,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("LoadDb Exception test")
     @Disabled
     void loadDatabaseExceptionTest() {
         hotelsRepository = new HotelsRepositoryImpl("asd");
@@ -49,6 +46,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("GetAll hotels from db test")
     void getAll() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/main/resources/dbHotels.json"),
@@ -60,6 +58,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get a hotel by Code from db test")
     void getHotelByCode() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByHotelCodeTest.json"),
@@ -71,6 +70,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get a hotel by name from db test")
     void getHotelByName() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByNameTest.json"),
@@ -82,6 +82,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by City from db test")
     void getHotelsByCity() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByCityTest.json"),
@@ -93,6 +94,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by RoomType from db test")
     void getHotelsByRoomType() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByRoomTypeTest.json"),
@@ -104,6 +106,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by Price from db test")
     void getHotelsByPrice() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByPriceTest.json"),
@@ -115,6 +118,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by Reserved Status from db test")
     void getHotelByReserved() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByReservedTest.json"),
@@ -126,6 +130,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by DateTo from db test")
     void getHotelByDateTo() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByDateToTest.json"),
@@ -138,6 +143,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by DateFrom from db test")
     void getHotelByDateFrom() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByDateFromTest.json"),
@@ -150,6 +156,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by dates from db test")
     void getHotelByDate() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByDateTest.json"),
@@ -163,6 +170,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Get hotel by Date & City from db test")
     void getHotelByDateAndCity() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/GetByDateAndCity.json"),
@@ -178,6 +186,7 @@ class HotelsRepositoryImplTest {
     }
 
     @Test
+    @DisplayName("Change Status of a hotel test")
     void changeStatusForHotel() throws IOException {
         List<HotelDTO> listForTest = objectMapper.readValue(
                 new File("src/test/resources/ChangeStatusTest.json"),

@@ -1,5 +1,7 @@
-package co.meli.qaproject.dto;
+package co.meli.qaproject.dto.hotels;
 
+import co.meli.qaproject.dto.PaymentMethodDTO;
+import co.meli.qaproject.dto.PeopleDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

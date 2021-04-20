@@ -1,5 +1,6 @@
-package co.meli.qaproject.dto;
+package co.meli.qaproject.dto.hotels;
 
+import co.meli.qaproject.dto.StatusCodeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class ResponseHotelBookDTO {
     BookingDTO booking;
     StatusCodeDTO statusCode;
 
-    public ResponseHotelBookDTO(PayloadHotelBookDTO payloadHotelBook) {
+    public ResponseHotelBookDTO(PayloadHotelBookingDTO payloadHotelBook) {
         this.username = payloadHotelBook.getUserName();
         this.booking = payloadHotelBook.getBooking();
     }

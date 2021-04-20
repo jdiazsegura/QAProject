@@ -1,8 +1,14 @@
 package co.meli.qaproject.services;
 
 import co.meli.qaproject.dto.*;
+import co.meli.qaproject.dto.hotels.HotelDTO;
+import co.meli.qaproject.dto.hotels.HotelNormDTO;
+import co.meli.qaproject.dto.hotels.PayloadHotelBookingDTO;
+import co.meli.qaproject.dto.hotels.ResponseHotelBookDTO;
+import co.meli.qaproject.exceptions.ApiException;
 import co.meli.qaproject.repositories.HotelsRepository;
 import co.meli.qaproject.utils.DateUtils;
+import co.meli.qaproject.utils.Validations;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,9 +22,11 @@ public class HotelServiceImpl implements HotelService{
 
     private final HotelsRepository hotelsRepository;
     private DateUtils dateUtils = new DateUtils();
+    private Validations validations;
 
     public HotelServiceImpl(HotelsRepository hotelsRepository) {
         this.hotelsRepository = hotelsRepository;
+        this.validations = new Validations(hotelsRepository);
     }
 
     @Override
@@ -41,11 +49,13 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
-    public ResponseHotelBookDTO bookHotel(PayloadHotelBookDTO payloadHotelBook) {
+    public ResponseHotelBookDTO bookHotel(PayloadHotelBookingDTO payloadHotelBook) throws ApiException {
         ResponseHotelBookDTO payloadResult = new ResponseHotelBookDTO(payloadHotelBook);
+        validations.validateBooking(payloadHotelBook);
         var booking = payloadHotelBook.getBooking();
         var hotel = hotelsRepository.getHotelByCode(hotelsRepository.getAll(),booking.getHotelCode());
-        var nights = calculateNights(booking.getDateTo(), booking.getDateFrom());
+        var nights = calculateNights(booking.getDateFrom(), booking.getDateTo());
+
         payloadResult.setAmount(priceByNights(nights, Double.valueOf(hotel.getNightPrice())));
         payloadResult.setInterest(valueOfInterest(booking.getPaymentMethod().getType(),booking.getPaymentMethod().getDues())*10);
         payloadResult.setTotal(getTotalValue(payloadResult.getAmount(), payloadResult.getInterest()/10));

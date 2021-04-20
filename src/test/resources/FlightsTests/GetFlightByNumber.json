@@ -1,0 +1,9 @@
+{
+        "flightNumber": "CAME-0321",
+        "origin": "Cartagena",
+        "destination": "Medellín",
+        "seatType": "Economy",
+        "price": 7800,
+        "dateFrom": "23/01/2021",
+        "dateTo": "31/01/2021"
+}

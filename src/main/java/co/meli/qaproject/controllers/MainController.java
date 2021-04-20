@@ -1,17 +1,21 @@
 package co.meli.qaproject.controllers;
 
 import co.meli.qaproject.dto.*;
+import co.meli.qaproject.dto.flights.FlightDTO;
+import co.meli.qaproject.dto.flights.ResponseFlightReservDTO;
+import co.meli.qaproject.dto.hotels.HotelDTO;
+import co.meli.qaproject.dto.hotels.PayloadHotelBookingDTO;
+import co.meli.qaproject.dto.hotels.ResponseHotelBookDTO;
+import co.meli.qaproject.exceptions.ApiException;
 import co.meli.qaproject.exceptions.IncorrectFormatException;
 import co.meli.qaproject.exceptions.NoValidDatesException;
 import co.meli.qaproject.services.FlightsService;
 import co.meli.qaproject.services.HotelService;
-import co.meli.qaproject.utils.Validations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +28,7 @@ public class MainController implements IMainController {
     @Autowired
     private FlightsService flightsService;
 
-    private Validations validations = new Validations();
+    //private Validations validations = new Validations();
 
     @Override
     @GetMapping("/hotels")
@@ -38,7 +42,7 @@ public class MainController implements IMainController {
 
     @Override
     @PostMapping("/booking")
-    public ResponseEntity<ResponseHotelBookDTO> bookingHotel(@RequestBody PayloadHotelBookDTO payloadHotelBook){
+    public ResponseEntity<ResponseHotelBookDTO> bookingHotel(@RequestBody PayloadHotelBookingDTO payloadHotelBook) throws ApiException {
         return new ResponseEntity<>(hotelService.bookHotel(payloadHotelBook), HttpStatus.OK);
     }
 
@@ -54,6 +58,12 @@ public class MainController implements IMainController {
         }
     }
 
+    @Override
+    @PostMapping("/flight-reservation")
+    public ResponseEntity<ResponseFlightReservDTO> reserveFlight(@RequestBody co.meli.qaproject.dto.flights.PayloadFlightReservDTO payloadFlightReserv){
+        return new ResponseEntity<>(flightsService.reserveFlight(payloadFlightReserv),HttpStatus.OK);
+    }
+
 
 
 
@@ -61,7 +71,7 @@ public class MainController implements IMainController {
     @ExceptionHandler(IncorrectFormatException.class)
     public ResponseEntity<StatusCodeDTO> incorrectFormatExceptionHandler(IncorrectFormatException incorrectFormatException){
         StatusCodeDTO statusCodeDTO = new StatusCodeDTO();
-        statusCodeDTO.setCode(404);
+        statusCodeDTO.setCode(400);
         statusCodeDTO.setMessage("Incorrect Date: " + incorrectFormatException.getMessage());
         return new ResponseEntity<>(statusCodeDTO,HttpStatus.NOT_FOUND);
     }
@@ -69,8 +79,16 @@ public class MainController implements IMainController {
     @ExceptionHandler(NoValidDatesException.class)
     public ResponseEntity<StatusCodeDTO> noValidDatesExceptionHandler(NoValidDatesException noValidDatesException){
         StatusCodeDTO statusCodeDTO = new StatusCodeDTO();
-        statusCodeDTO.setCode(404);
+        statusCodeDTO.setCode(400);
         statusCodeDTO.setMessage("Incorrect Date: " + noValidDatesException.getMessage());
         return new ResponseEntity<>(statusCodeDTO,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<StatusCodeDTO> ApiExceptionHandler(ApiException apiException){
+        StatusCodeDTO statusCodeDTO = new StatusCodeDTO();
+        statusCodeDTO.setCode(400);
+        statusCodeDTO.setMessage(apiException.getMessage());
+        return new ResponseEntity<>(statusCodeDTO,HttpStatus.BAD_REQUEST);
     }
 }

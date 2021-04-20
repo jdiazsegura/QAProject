@@ -1,9 +1,8 @@
 package co.meli.qaproject.repositories;
 
-import co.meli.qaproject.dto.HotelDTO;
+import co.meli.qaproject.dto.hotels.HotelDTO;
 
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 import java.util.List;
 
 public interface HotelsRepository {

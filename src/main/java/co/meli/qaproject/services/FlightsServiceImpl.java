@@ -1,7 +1,9 @@
 package co.meli.qaproject.services;
 
-import co.meli.qaproject.dto.FlightDTO;
-import co.meli.qaproject.dto.FlightNormDTO;
+import co.meli.qaproject.dto.flights.FlightDTO;
+import co.meli.qaproject.dto.flights.FlightNormDTO;
+import co.meli.qaproject.dto.flights.PayloadFlightReservDTO;
+import co.meli.qaproject.dto.flights.ResponseFlightReservDTO;
 import co.meli.qaproject.repositories.FlightsRepository;
 import co.meli.qaproject.utils.DateUtils;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,37 @@ public class FlightsServiceImpl implements FlightsService{
                 ,allParams.get("origin")
                 ,allParams.get("destination")
         );
+    }
+
+    @Override
+    public ResponseFlightReservDTO reserveFlight(PayloadFlightReservDTO payloadFlightReserv){
+        ResponseFlightReservDTO payloadResult = new ResponseFlightReservDTO(payloadFlightReserv);
+        var reservation = payloadFlightReserv.getFlightReservation();
+        var flight = flightsRepository.getFlightByNumber(flightsRepository.getAll(),reservation.getFlightNumber());
+        payloadResult.setAmount((double) (flight.getPrice() * reservation.getSeats()));
+        payloadResult.setInterest(valueOfInterest(reservation.getPaymentMethod().getType(),reservation.getPaymentMethod().getDues())*10);
+        payloadResult.setTotal(getTotalValue(payloadResult.getAmount(), payloadResult.getInterest()));
+        return payloadResult;
+    }
+
+    @Override
+    public Double valueOfInterest(String type, Integer dues) {
+        var flag = 0.0;
+        if (type.equals("DEBIT")) {
+            return flag;
+        } else if (type.equals("CREDIT")) {
+            if (dues < 3) {
+                flag = 0.05;
+            } else if (dues <= 6) {
+                flag = 0.10;
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    public Double getTotalValue(Double Amount, Double valueOfInterest){
+        return Amount+(Amount*valueOfInterest);
     }
 
 

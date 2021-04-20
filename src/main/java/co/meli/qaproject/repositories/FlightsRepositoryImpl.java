@@ -1,7 +1,6 @@
 package co.meli.qaproject.repositories;
 
-import co.meli.qaproject.dto.FlightDTO;
-import co.meli.qaproject.dto.HotelDTO;
+import co.meli.qaproject.dto.flights.FlightDTO;
 import co.meli.qaproject.utils.DateUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,5 +52,13 @@ public class FlightsRepositoryImpl implements FlightsRepository {
                 .filter(flightDTO -> flightDTO.getOrigin().equals(origin))
                 .filter(flightDTO -> flightDTO.getDestination().equals(destination))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public FlightDTO getFlightByNumber(List<FlightDTO> list, String code){
+        return list.stream()
+                .filter(flightDTO -> flightDTO.getFlightNumber().equals(code))
+                .findFirst()
+                .get();
     }
 }

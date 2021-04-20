@@ -1,4 +1,4 @@
-package co.meli.qaproject.dto;
+package co.meli.qaproject.dto.hotels;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlightNormDTO {
+public class HotelNormDTO {
     String dateFrom;
     String dateTo;
-    String origin;
-    String destination;
+    String city;
 }

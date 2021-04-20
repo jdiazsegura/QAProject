@@ -1,4 +1,4 @@
-package co.meli.qaproject.dto;
+package co.meli.qaproject.dto.hotels;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

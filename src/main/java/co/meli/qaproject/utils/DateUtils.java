@@ -9,15 +9,4 @@ public class DateUtils {
         var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(date,formatter);
     }
-
-    public Integer comparable(LocalDate date, LocalDate date2){
-        if(date.compareTo(date2) == 0){
-            return 0;
-        }else if(date.compareTo(date2) >0){
-            return 1;
-        }else if(date.compareTo(date2) < 0){
-            return -1;
-        }
-        return 0;
-    }
 }

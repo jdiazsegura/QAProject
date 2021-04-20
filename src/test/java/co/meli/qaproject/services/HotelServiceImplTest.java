@@ -1,19 +1,14 @@
 package co.meli.qaproject.services;
 
-import co.meli.qaproject.dto.HotelDTO;
+import co.meli.qaproject.dto.hotels.HotelDTO;
 import co.meli.qaproject.repositories.HotelsRepository;
-import co.meli.qaproject.repositories.HotelsRepositoryImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +41,7 @@ class HotelServiceImplTest {
     }
 
     @Test
+    @DisplayName("Get all hotels test")
     void getAll() throws IOException {
 
         when(hotelsRepository.getAll()).thenReturn(testList);
@@ -54,6 +50,7 @@ class HotelServiceImplTest {
     }
 
     @Test
+    @DisplayName("Get all hotels by Dates & City")
     void getAllByDateAndCity() throws IOException {
         List<HotelDTO> listExpected = objectMapper.readValue(
                 new File("src/test/resources/GetByDateAndCity.json"),
@@ -73,6 +70,7 @@ class HotelServiceImplTest {
     }
 
     @Test
+    @DisplayName("Calculate number of nights test")
     void calculateNights() {
         var testFlag = hotelService.calculateNights("10/11/2021","20/11/2021");
 
@@ -80,12 +78,14 @@ class HotelServiceImplTest {
     }
 
     @Test
+    @DisplayName("Calculate prices by nights test")
     void priceByNights() {
         var testFLag = hotelService.priceByNights(10,6300.00);
         assertEquals(63000,testFLag);
     }
 
     @Test
+    @DisplayName("Calculate value of interest test")
     void valueOfInterest() {
         var testFlag = hotelService.valueOfInterest("CREDIT",2);
         var testFlag2 = hotelService.valueOfInterest("DEBIT",1);
@@ -93,10 +93,10 @@ class HotelServiceImplTest {
         assertEquals(0.05,testFlag);
         assertEquals(0,testFlag2);
         assertEquals(0.10,testFlag3);
-
     }
 
     @Test
+    @DisplayName("Calculate total value of booking test")
     void getTotalValue() {
         var testFlag = hotelService.getTotalValue(63000.0,0.05);
         assertEquals(66150,testFlag);

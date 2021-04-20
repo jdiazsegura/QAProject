@@ -1,4 +1,4 @@
-package co.meli.qaproject.dto;
+package co.meli.qaproject.dto.flights;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PayloadHotelBookDTO {
+public class PayloadFlightReservDTO {
+
     String userName;
-    BookingDTO booking;
+    FlightReservationDTO flightReservation;
+
 }

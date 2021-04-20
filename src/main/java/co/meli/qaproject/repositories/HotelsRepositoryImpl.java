@@ -1,6 +1,6 @@
 package co.meli.qaproject.repositories;
 
-import co.meli.qaproject.dto.HotelDTO;
+import co.meli.qaproject.dto.hotels.HotelDTO;
 import co.meli.qaproject.utils.DateUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +11,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
